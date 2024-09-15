@@ -1,23 +1,23 @@
 <template>
     <div class="clock-container size-full flex text-7xl font-mono font-bold pt-8">
         <div class="year grow flex flex-col items-center justify-center gap-2">
-            <span>{{ remainingTimeData?.years || '--'}}</span>
+            <span>{{ getSafeValue(remainingTimeData?.years)}}</span>
             <span class="text-xl text-gray-400">years</span>
         </div>
         <div class="days grow flex flex-col items-center justify-center gap-2">
-            <span>{{ remainingTimeData?.days || '--'}}</span>
+            <span>{{ getSafeValue(remainingTimeData?.days)}}</span>
             <span class="text-xl text-gray-400">days</span>
         </div>
         <div class="hours grow flex flex-col items-center justify-center gap-2">
-            <span>{{ remainingTimeData?.hours || '--'}}</span>
+            <span>{{ getSafeValue(remainingTimeData?.hours)}}</span>
             <span class="text-xl text-gray-400">hours</span>
         </div>
         <div class="minute grow flex flex-col items-center justify-center gap-2">
-            <span>{{remainingTimeData?.minutes || '--'}}</span>
+            <span>{{getSafeValue(remainingTimeData?.minutes)}}</span>
             <span class="text-xl text-gray-400">minutes</span>
         </div>
         <div class="second grow flex flex-col items-center justify-center gap-2">
-            <span>{{ remainingTimeData?.seconds || '--'}}</span>
+            <span>{{ getSafeValue(remainingTimeData?.seconds)}}</span>
             <span class="text-xl text-gray-400">seconds</span>
         </div>
     </div>
@@ -45,6 +45,17 @@ const refreshTime = () => {
 }
 
 refreshTime();
+function isNumber(value:number|undefined): value is number {
+    return typeof value === 'number' && !isNaN(value);
+}
+
+const getSafeValue = (value: number | undefined) => {
+    if(isNumber(value)) {
+        return value;
+    } else {
+        return '--';
+    }
+}
 
 </script>
 <style>
